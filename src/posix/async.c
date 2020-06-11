@@ -136,6 +136,9 @@ int async_read_timeout(struct async_device * device, void * buf, unsigned int co
         if(res > 0)
         {
           bread += res;
+        } else if (errno == EIO) {
+            PRINT_ERROR_ERRNO("read");
+            break;
         }
       }
     }
@@ -180,6 +183,9 @@ int async_write_timeout(struct async_device * device, const void * buf, unsigned
         if(res > 0)
         {
           bwritten += res;
+        } else if (errno == EIO) {
+            PRINT_ERROR_ERRNO("write");
+            break;
         }
       }
     }
